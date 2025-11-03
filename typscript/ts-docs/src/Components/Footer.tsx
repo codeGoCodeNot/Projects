@@ -28,7 +28,7 @@ const SocialLinks = () => {
           </a>
         </div>
 
-        <div className="flex justify-center items-center gap-10 mt-5">
+        <div className="flex justify-center items-center gap-5 mt-5">
           <div className="text-xs">
             📧{" "}
             <a
