@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { docsContext } from "./context/docsContext";
 import Categories from "./Categories";
-import docsData from "./data/data";
 
 const Docs = () => {
   const context = useContext(docsContext);
