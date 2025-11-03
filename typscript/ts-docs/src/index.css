@@ -4,6 +4,11 @@ body {
   background: #262626;
   color: #ffffff;
   font-family: "Inter", sans-serif;
+  height: 100vh;
+}
+
+#root {
+  height: 100vh;
 }
 
 button {
