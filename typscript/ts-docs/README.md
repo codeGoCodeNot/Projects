@@ -11,6 +11,11 @@ This project is a personal knowledge vault built in React and TypeScript. Here y
 - **About Me Panel** – Learn more about the developer and the philosophy behind the project.
 - **Social & Contact Links** – Find my LinkedIn, GitHub, email, and phone in the footer.
 
+## Live Demo
+
+Check out the deployed app here:  
+👉 [euphonious-semolina-9af534.netlify.app](https://euphonious-semolina-9af534.netlify.app/)
+
 ## How to Use
 
 1. Start the app with `npm start` (or your preferred React command).
