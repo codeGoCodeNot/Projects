@@ -1,5 +1,3 @@
-import "@total-typescript/ts-reset";
-
 const fetchData = async () => {
   const result = await fetch("https://jsonplaceholder.typicode.com/todos/1");
 

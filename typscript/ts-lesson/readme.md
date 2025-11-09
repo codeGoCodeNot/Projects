@@ -18,3 +18,8 @@ set -up
 - run: pnpm approve-builds
 - run: pnpm run ci
 - run: pnpm add -D npm-run-all
+- run: pnpm install total-typescript/ts-reset
+
+import
+
+import "@total-typescript/ts-reset";
