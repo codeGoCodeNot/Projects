@@ -12,6 +12,13 @@ set -up
 "preview": "vite preview" // Preview production build locally
 }
 
+"devDependencies": {
+"npm-run-all": "^4.1.5",
+"typescript": "~5.9.3",
+"vite": "^7.1.7",
+"@types/node": "24.10.0"
+},
+
 ~bash
 
 - run: pnpm install --frozen-lockfile
@@ -19,7 +26,12 @@ set -up
 - run: pnpm run ci
 - run: pnpm add -D npm-run-all
 - run: pnpm install total-typescript/ts-reset
+- run: pnpm add diff
+- run: pnpm i @types/node
+- run: pnpm i zod
 
 import
 
 import "@total-typescript/ts-reset";
+import { diffChars, diffWords, diffLines } from "diff";
+import type { Change } from "diff";
