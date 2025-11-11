@@ -28,6 +28,7 @@ for (const num of numSet) {
 
 // Converting a set to an Array
 let mySet = new Set<number>([1, 2, 3, 4]);
+console.log(mySet);
 console.log(Array.from(mySet));
 const newSet = [...mySet];
 console.log(newSet);
