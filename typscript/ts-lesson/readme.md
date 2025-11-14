@@ -29,9 +29,11 @@ set -up
 - run: pnpm add diff
 - run: pnpm i @types/node
 - run: pnpm i zod
+- run: pnpm install --save-dev ts-toolbelt
 
 import
 
 import "@total-typescript/ts-reset";
 import { diffChars, diffWords, diffLines } from "diff";
 import type { Change } from "diff";
+import { S } from "ts-toolbelt";
