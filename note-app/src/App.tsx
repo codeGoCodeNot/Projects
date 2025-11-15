@@ -128,11 +128,11 @@ function App() {
         flex flex-col items-center gap-4 p-5 md:flex-row md:gap-10 md:items-start
         "
         >
-          <section aria-labelledby="notes-heading">
+          <section aria-labelledby="notes-heading" className="w-full md:w-auto">
             <header>
               <h1
                 id="notes-heading"
-                className="text-4xl font-medium text-center mb-20"
+                className="text-4xl font-medium text-center mb-8 md:mb-20"
               >
                 Notes
               </h1>
@@ -140,7 +140,9 @@ function App() {
 
             <aside
               aria-label="Calendar"
-              className="w-[400px] h-[500px] p-5 md:p-0"
+              className="
+              flex justify-center items-center  mx-auto py-5 h-[550px] w-[90%]
+              md:w-[400px] md:p-0 overflow-visible"
             >
               <Calendar
                 mode="single"
@@ -149,8 +151,11 @@ function App() {
                   setDate(new Date(selectedDay!.getTime()));
                 }}
                 className="
-                soft-3d
-                rounded-md border-black h-full w-full flex items-center justify-center
+                  soft-3d
+                  rounded-md bg-white border-2 border-slate-200
+                  w-full md:h-full h-auto
+                  overflow-auto
+                  flex items-center justify-center
                 "
               />
             </aside>
@@ -158,7 +163,7 @@ function App() {
 
           <section
             aria-label="Notes list"
-            className="relative w-full flex items-center justify-center"
+            className="relative w-full flex items-center justify-center "
           >
             <div aria-hidden="false">
               <Toolbar
@@ -179,8 +184,8 @@ function App() {
 
             <div
               className="
-            flex flex-col
-            md:grid md:grid-cols-1 gap-4 mt-20
+            flex flex-col  pt-20
+            md:grid md:grid-cols-1 gap-4 mt-6 md:mt-20 md:pt-0
             xl:grid-cols-2
             "
               aria-live="polite"
