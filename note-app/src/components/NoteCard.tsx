@@ -28,7 +28,7 @@ const NoteCard: React.FC<NoteCardProps> = ({
   return (
     <Card
       className={cn(
-        "w-[350px] h-[350px] flex justify-between border-2 relative",
+        "w-[350px] max-w-full min-h-[280px] flex flex-col box-border border-2 relative overflow-hidden p-4",
         {
           "border-[#b91c1c] text-[#b91c1c]": note.priority === 5,
           "border-[#c2410c] text-[#c2410c]": note.priority === 4,
@@ -38,28 +38,48 @@ const NoteCard: React.FC<NoteCardProps> = ({
         }
       )}
     >
-      <CardHeader>
-        <CardTitle>{note.title}</CardTitle>
-        <CardDescription>{format(note.date, "do MMM, yyy")}</CardDescription>
-        <CardAction>Card Action</CardAction>
-
-        <div
-          onClick={() => handleDelete(note)}
-          className="w-[16px] absolute top-1 right-1 cursor-pointer"
-        >
-          <img src="/x.svg" alt="delete" className="w-full object-contain" />
-        </div>
-        <CardContent>
-          <p>{note.description}</p>
-        </CardContent>
-      </CardHeader>
-      <CardFooter className="flex flex-col items-start gap-y-2">
-        <Label>Completed</Label>
-        <Switch
-          checked={note.isCompleted}
-          onCheckedChange={(checked) => handleCompleted(checked, note.id)}
-          className="cursor-pointer "
+      <div
+        onClick={() => handleDelete(note)}
+        className="w-4 h-4 absolute top-3 right-3 cursor-pointer z-20"
+        aria-label="Delete note"
+        role="button"
+      >
+        <img
+          src="/x.svg"
+          alt="delete"
+          className="w-full h-full object-contain"
         />
+      </div>
+
+      <CardHeader className="flex-none pb-2">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <CardTitle className="break-words">{note.title}</CardTitle>
+            <CardDescription className="text-sm">
+              {format(note.date, "do MMM, yyy")}
+            </CardDescription>
+          </div>
+          <CardAction className="ml-auto">Card Action</CardAction>
+        </div>
+      </CardHeader>
+
+      <CardContent className="flex-1 overflow-auto">
+        <p className="whitespace-pre-wrap break-words text-[inherit]">
+          {note.description}
+        </p>
+      </CardContent>
+
+      <CardFooter className="flex-none mt-4 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <Label>Completed</Label>
+        </div>
+        <div>
+          <Switch
+            checked={note.isCompleted}
+            onCheckedChange={(checked) => handleCompleted(checked, note.id)}
+            className="cursor-pointer"
+          />
+        </div>
       </CardFooter>
     </Card>
   );

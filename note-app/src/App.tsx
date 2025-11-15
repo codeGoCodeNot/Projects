@@ -5,9 +5,81 @@ import Toolbar from "./components/Toolbar";
 import type { Note } from "./components/types";
 import NoteCard from "./components/NoteCard";
 
+const STORAGE_KEY = "notes_v1";
+
+function loadNotesFromStorage(): Note[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+
+    const parsed: unknown = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+
+    const notes = parsed.reduce<Note[]>((acc, item) => {
+      if (typeof item !== "object" || item === null) return acc;
+      const obj = item as Record<string, unknown>;
+
+      const id =
+        typeof obj.id === "string" && obj.id.trim() !== ""
+          ? obj.id
+          : `note-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+
+      const title = typeof obj.title === "string" ? obj.title : "";
+      const description =
+        typeof obj.description === "string" ? obj.description : "";
+
+      let date: Date;
+      if (typeof obj.date === "string" || typeof obj.date === "number") {
+        const d = new Date(obj.date as string | number);
+        date = Number.isNaN(d.getTime()) ? new Date() : d;
+      } else {
+        date = new Date();
+      }
+
+      const priority =
+        typeof obj.priority === "number" &&
+        [1, 2, 3, 4, 5].includes(obj.priority)
+          ? (obj.priority as 1 | 2 | 3 | 4 | 5)
+          : 1;
+
+      const isCompleted = Boolean(obj.isCompleted);
+
+      acc.push({
+        id,
+        title,
+        description,
+        date,
+        priority,
+        isCompleted,
+      });
+
+      return acc;
+    }, []);
+
+    return notes;
+  } catch (err) {
+    console.error("[loadNotesFromStorage] parse error", err);
+    return [];
+  }
+}
+
+function saveNotesToStorage(notes: Note[]) {
+  try {
+    const serializable = notes.map((n) => ({
+      ...n,
+      date: n.date instanceof Date ? n.date.toISOString() : String(n.date),
+    }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(serializable));
+  } catch (err) {
+    console.error("[saveNotesToStorage] write failed", err);
+  }
+}
+
 function App() {
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [notes, setNotes] = useState<Note[]>([]);
+
+  const [notes, setNotes] = useState<Note[]>(() => loadNotesFromStorage());
+
   const [filteredNotes, setFilteredNotes] = useState<Note[]>(notes);
 
   useEffect(() => {
@@ -16,6 +88,11 @@ function App() {
       notes.filter((note) => note.date.toDateString() === date?.toDateString())
     );
   }, [notes, date]);
+
+  // Keep storage in sync as a fallback (helps if other code changes notes)
+  useEffect(() => {
+    saveNotesToStorage(notes);
+  }, [notes]);
 
   const handleSort = (order: "asc" | "desc") => {
     setFilteredNotes((prev) => {
@@ -28,19 +105,19 @@ function App() {
   };
 
   const handleDelete = (note: Note) => {
-    setNotes((prev) => prev.filter((item) => item.id !== note.id));
+    const next = notes.filter((item) => item.id !== note.id);
+    setNotes(next);
+    saveNotesToStorage(next);
   };
 
+  // THIS is the function you asked to persist immediately on completed toggle
   const handleCompleted = (checked: boolean, noteId: string) => {
-    setNotes((prev) =>
-      prev.map((note) => {
-        if (note.id === noteId) {
-          return { ...note, isCompleted: checked };
-        } else {
-          return note;
-        }
-      })
+    const next = notes.map((note) =>
+      note.id === noteId ? { ...note, isCompleted: checked } : note
     );
+    setNotes(next);
+    // persist immediately
+    saveNotesToStorage(next);
   };
 
   return (
@@ -86,7 +163,16 @@ function App() {
             <div aria-hidden="false">
               <Toolbar
                 date={date!}
-                setNotes={setNotes}
+                setNotes={(updater) => {
+                  if (typeof updater === "function") {
+                    const next = updater(notes);
+                    setNotes(next);
+                    saveNotesToStorage(next);
+                  } else {
+                    setNotes(updater as Note[]);
+                    saveNotesToStorage(updater as Note[]);
+                  }
+                }}
                 handleSort={handleSort}
               />
             </div>
