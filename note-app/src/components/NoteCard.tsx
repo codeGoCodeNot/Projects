@@ -28,13 +28,13 @@ const NoteCard: React.FC<NoteCardProps> = ({
   return (
     <Card
       className={cn(
-        "w-[350px] max-w-full min-h-[280px] flex flex-col box-border border-2 relative overflow-hidden p-4",
+        "soft-3d w-[350px] max-w-full min-h-[280px] flex flex-col box-border relative overflow-hidden p-4",
         {
-          "border-[#b91c1c] text-[#b91c1c]": note.priority === 5,
-          "border-[#c2410c] text-[#c2410c]": note.priority === 4,
-          "border-[#a16207] text-[#a16207]": note.priority === 3,
-          "border-[#0f766e] text-[#0f766e]": note.priority === 2,
-          "border-[#15803d] text-[#15803d]": note.priority === 1,
+          "text-red-900": note.priority === 5,
+          "text-orange-900": note.priority === 4,
+          "text-amber-900": note.priority === 3,
+          "text-teal-900": note.priority === 2,
+          "text-green-900": note.priority === 1,
         }
       )}
     >
@@ -55,11 +55,11 @@ const NoteCard: React.FC<NoteCardProps> = ({
         <div className="flex items-start justify-between gap-4">
           <div>
             <CardTitle className="break-words">{note.title}</CardTitle>
-            <CardDescription className="text-sm">
+            <CardDescription className="text-base">
               {format(note.date, "do MMM, yyy")}
             </CardDescription>
           </div>
-          <CardAction className="ml-auto">Card Action</CardAction>
+          <CardAction className="ml-auto font-semibold">Card Action</CardAction>
         </div>
       </CardHeader>
 

@@ -118,3 +118,87 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Strong pop-out 3D card */
+.soft-3d {
+  --card-bg: #ffffff;
+  --edge: rgba(15, 23, 42, 0.08);
+  --shadow-1: rgba(2, 6, 23, 0.12);
+  --shadow-2: rgba(2, 6, 23, 0.08);
+
+  background: var(--card-bg);
+  border-radius: 0.5rem; /* matches rounded-md */
+  position: relative;
+  border: 1px solid var(--edge);
+  overflow: hidden;
+
+  /* layered outer shadows to create depth */
+  box-shadow: 0 30px 60px rgba(2, 6, 23, 0.16),
+    /* big soft shadow */ 0 10px 20px rgba(2, 6, 23, 0.1),
+    /* medium ambient */ 0 2px 6px rgba(2, 6, 23, 0.04); /* small near-surface */
+
+  transform: translateZ(0);
+  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 220ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 220ms;
+  will-change: transform, box-shadow;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* subtle top highlight for a beveled rim */
+.soft-3d::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0)
+  );
+  mix-blend-mode: overlay;
+  opacity: 0.9;
+}
+
+/* soft bottom halo to exaggerate lift from the surface */
+.soft-3d::after {
+  content: "";
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: -18%;
+  height: 28%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(2, 6, 23, 0.18) 0%,
+    rgba(2, 6, 23, 0.06) 40%,
+    rgba(2, 6, 23, 0) 100%
+  );
+  filter: blur(18px);
+  transform-origin: center;
+  opacity: 0.95;
+}
+
+/* stronger pop on hover/focus - card comes out toward user */
+.soft-3d:hover,
+.soft-3d:focus-within,
+.soft-3d.pop {
+  transform: translateY(-10px) scale(1.007);
+  box-shadow: 0 44px 90px rgba(2, 6, 23, 0.22), 0 20px 40px rgba(2, 6, 23, 0.14),
+    0 6px 12px rgba(2, 6, 23, 0.06);
+  filter: saturate(1.02);
+}
+
+/* pressed state to make it feel tactile */
+.soft-3d:active {
+  transform: translateY(-2px) scale(1.002);
+  box-shadow: 0 20px 40px rgba(2, 6, 23, 0.14), 0 8px 16px rgba(2, 6, 23, 0.08);
+}
+
+/* smaller variant */
+.soft-3d-sm {
+  border-radius: 0.375rem;
+  box-shadow: 0 18px 36px rgba(2, 6, 23, 0.12), 0 6px 12px rgba(2, 6, 23, 0.06);
+}

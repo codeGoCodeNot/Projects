@@ -149,8 +149,8 @@ function App() {
                   setDate(new Date(selectedDay!.getTime()));
                 }}
                 className="
-                rounded-md border h-full w-full flex items-center justify-center
-                
+                soft-3d
+                rounded-md border-black h-full w-full flex items-center justify-center
                 "
               />
             </aside>
