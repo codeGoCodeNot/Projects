@@ -1,29 +1,12 @@
-import products from "./data";
-import { useState } from "react";
+import type { ProductProps } from "./data";
 
-const Cart = () => {
-  const [cart, setCart] = useState(products);
+type CartProps = {
+  cart: ProductProps[];
+  onAddProduct: (id: number) => void;
+  onRemoveProduct: (id: number) => void;
+};
 
-  const handleAddProduct = (id: number) => {
-    setCart((prev) =>
-      prev.map((product) =>
-        product.id === id
-          ? { ...product, quantity: product.quantity + 1 }
-          : product
-      )
-    );
-  };
-
-  const handleRemoveProduct = (id: number) => {
-    setCart((prev) =>
-      prev.map((product) =>
-        product.id === id
-          ? { ...product, quantity: product.quantity - 1 }
-          : product
-      )
-    );
-  };
-
+const Cart = ({ cart, onAddProduct, onRemoveProduct }: CartProps) => {
   return (
     <div className="cart-wrapper">
       <h1>Your cart</h1>
@@ -41,13 +24,11 @@ const Cart = () => {
               <ul className="cart-buttons">
                 <li>{product.quantity}</li>
                 <li>
-                  <button onClick={() => handleAddProduct(product.id)}>
-                    +
-                  </button>
+                  <button onClick={() => onAddProduct(product.id)}>+</button>
                 </li>
                 <li>
                   <button
-                    onClick={() => handleRemoveProduct(product.id)}
+                    onClick={() => onRemoveProduct(product.id)}
                     disabled={product.quantity === 0}
                   >
                     -

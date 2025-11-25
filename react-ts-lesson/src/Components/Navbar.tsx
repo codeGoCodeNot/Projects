@@ -1,12 +1,20 @@
 import { useState } from "react";
+import type { ProductProps } from "./data";
 
-const Navbar = ({ onShowCart }: { onShowCart: () => void }) => {
+type NavbarProps = {
+  onShowCart: () => void;
+  cart: ProductProps[];
+};
+
+const Navbar = ({ onShowCart, cart }: NavbarProps) => {
   const [theme, setTheme] = useState<boolean>(true);
 
   const handleTheme = () => {
     setTheme((prev) => !prev);
     document.body.classList.toggle("dark");
   };
+
+  const count = cart.reduce((acc, product) => acc + product.quantity, 0);
 
   return (
     <div className="navbar">
@@ -36,7 +44,7 @@ const Navbar = ({ onShowCart }: { onShowCart: () => void }) => {
           </li>
         </ul>
         <button onClick={onShowCart} className="btn btn-nav">
-          Cart (0)
+          Cart ({count})
         </button>
       </nav>
     </div>
