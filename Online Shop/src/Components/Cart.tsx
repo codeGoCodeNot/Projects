@@ -1,4 +1,4 @@
-import type { ProductProps } from "./data";
+import type { ProductProps } from "./types";
 
 type CartProps = {
   cart: ProductProps[];
@@ -36,7 +36,9 @@ const Cart = ({ cart, onAddProduct, onRemoveProduct }: CartProps) => {
                 </li>
               </ul>
             </div>
-            <p>${((product.price / 100) * product.quantity).toFixed(2)}</p>
+            <p>
+              ${((product.final_price / 100) * product.quantity).toFixed(2)}
+            </p>
           </div>
         </div>
       ))}

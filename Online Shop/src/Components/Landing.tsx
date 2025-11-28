@@ -13,7 +13,7 @@ const Landing = ({ onShowProduct }: { onShowProduct: () => void }) => {
         className="landing-cover"
         width="816"
         height="380"
-        src="https://www.drugfreekidscanada.org/wp-content/uploads/2022/10/shutterstock_2195859413.jpeg"
+        src="https://i.pinimg.com/1200x/05/ec/df/05ecdf15dfecf3be29e0186530a5b267.jpg"
         alt="Display of fruits and vegetables"
       />
     </>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { ProductProps } from "./data";
+import type { ProductProps } from "./types";
 
 type NavbarProps = {
   onShowCart: () => void;
