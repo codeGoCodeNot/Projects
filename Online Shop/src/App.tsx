@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { get } from "./Fetcher/fetcher";
 import { type ProductProps } from "./Components/types";
+import Login from "./Components/Login";
 
 function App() {
   const [showCart, setShowCart] = useState<boolean>(false);
   const [showProduct, setShowProduct] = useState<boolean>(false);
+  const [login, setLogin] = useState<boolean>(false);
 
   const [cart, setCart] = useState<ProductProps[]>([]);
 
@@ -34,7 +36,9 @@ function App() {
   };
 
   const onShowCart = () => setShowCart((prev) => !prev);
-  const onShowProduct = () => setShowProduct((prev) => !prev);
+  const onShowProduct = (value?: boolean) =>
+    setShowProduct((prev) => (typeof value === "boolean" ? value : !prev));
+  const onShowLogin = () => setLogin((prev) => !prev);
 
   // data from api
   const { data: products } = useSuspenseQuery<ProductProps[]>({
@@ -53,7 +57,12 @@ function App() {
     <>
       <div className="wrapper-gray">
         <div className="container">
-          <Navbar onShowCart={onShowCart} cart={cart} />
+          <Navbar
+            onShowCart={onShowCart}
+            cart={cart}
+            onShowLogin={onShowLogin}
+            onShowProduct={onShowProduct}
+          />
         </div>
       </div>
 
@@ -75,6 +84,10 @@ function App() {
               ))}
             </div>
           </>
+        ) : login ? (
+          <div>
+            <Login />
+          </div>
         ) : (
           <Landing onShowProduct={onShowProduct} />
         )}

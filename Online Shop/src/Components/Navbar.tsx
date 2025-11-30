@@ -4,9 +4,16 @@ import type { ProductProps } from "./types";
 type NavbarProps = {
   onShowCart: () => void;
   cart: ProductProps[];
+  onShowLogin: () => void;
+  onShowProduct: (value?: boolean) => void;
 };
 
-const Navbar = ({ onShowCart, cart }: NavbarProps) => {
+const Navbar = ({
+  onShowCart,
+  cart,
+  onShowLogin,
+  onShowProduct,
+}: NavbarProps) => {
   const [theme, setTheme] = useState<boolean>(true);
 
   const handleTheme = () => {
@@ -34,13 +41,17 @@ const Navbar = ({ onShowCart, cart }: NavbarProps) => {
         </button>
         <ul className="nav">
           <li className="nav-item">
-            <a>Home</a>
+            <a onClick={() => onShowProduct(false)} className="cursor-pointer">
+              Home
+            </a>
           </li>
           <li className="nav-item">
-            <a>Login</a>
+            <a onClick={onShowLogin} className="cursor-pointer">
+              Login
+            </a>
           </li>
           <li className="nav-item">
-            <a>Products</a>
+            <a className="cursor-pointer">Products</a>
           </li>
         </ul>
         <button onClick={onShowCart} className="btn btn-nav">

@@ -14,3 +14,21 @@ export const get = (endpoint: string) =>
       },
     })
     .then((res) => res.data);
+
+export const post = async (
+  method: string,
+  endpoint: string,
+  data?: { u_email: string; u_password: string }
+) => {
+  const res = await axios({
+    method,
+    url: BASE_URL + endpoint,
+    data,
+    headers: {
+      apikey,
+      Authorization: `Bearer ${apikey}`,
+      "Content-Type": "application/json",
+    },
+  });
+  return res.data;
+};
