@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useId } from "react";
+import { useEffect, useId } from "react";
 import { post } from "../Fetcher/fetcher";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -26,8 +26,13 @@ const Login = () => {
     register,
     handleSubmit,
     reset,
+    setFocus,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
+
+  useEffect(() => {
+    setFocus("email");
+  }, [setFocus]);
 
   const mutation = useMutation({
     mutationFn: (data: { u_email: string; u_password: string }) =>
@@ -61,7 +66,7 @@ const Login = () => {
           autoComplete="email"
         />
         {errors.email && (
-          <p className="text-red-500 text-sm mb-1">{errors.email.message}</p>
+          <p className="text-red-500 text-sm pb-1">{errors.email.message}</p>
         )}
 
         <label className="label" htmlFor={passwordId}>
@@ -77,7 +82,7 @@ const Login = () => {
           autoComplete="current-password"
         />
         {errors.password && (
-          <p className="text-red-500 text-sm mb-1">{errors.password.message}</p>
+          <p className="text-red-500 text-sm pb-1">{errors.password.message}</p>
         )}
 
         <div className="form-buttons">
