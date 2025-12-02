@@ -1,16 +1,20 @@
 import type { ProductProps } from "./types";
+import { CartContext } from "../context/CartContext";
+import { useContext } from "react";
 
-type CartProps = {
+export type CartProps = {
   cart: ProductProps[];
-  onAddProduct: (id: number) => void;
-  onRemoveProduct: (id: number) => void;
+  handleAddProduct: (id: number) => void;
+  handleRemoveProduct: (id: number) => void;
 };
 
-const Cart = ({ cart, onAddProduct, onRemoveProduct }: CartProps) => {
+const Cart = () => {
+  const context = useContext<CartProps | null>(CartContext);
+
   return (
     <div className="cart-wrapper">
       <h1>Your cart</h1>
-      {cart.map((product) => (
+      {context?.cart.map((product) => (
         <div key={product.id} className="cart-product">
           <img
             src={product.thumbnail}
@@ -24,11 +28,13 @@ const Cart = ({ cart, onAddProduct, onRemoveProduct }: CartProps) => {
               <ul className="cart-buttons">
                 <li>{product.quantity}</li>
                 <li>
-                  <button onClick={() => onAddProduct(product.id)}>+</button>
+                  <button onClick={() => context.handleAddProduct(product.id)}>
+                    +
+                  </button>
                 </li>
                 <li>
                   <button
-                    onClick={() => onRemoveProduct(product.id)}
+                    onClick={() => context.handleRemoveProduct(product.id)}
                     disabled={product.quantity === 0}
                   >
                     -

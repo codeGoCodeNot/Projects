@@ -1,7 +1,12 @@
+import Settings from "./Settings";
+import { UserProvider } from "./context/UserContext";
+
 function App() {
   return (
     <>
-      <h1>Hello World!</h1>
+      <UserProvider>
+        <Settings />
+      </UserProvider>
     </>
   );
 }

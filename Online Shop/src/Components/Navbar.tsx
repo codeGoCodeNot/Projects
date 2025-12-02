@@ -1,27 +1,27 @@
-import { useState } from "react";
-import type { ProductProps } from "./types";
+import { useContext, useState } from "react";
+
+import { CartContext } from "../context/CartContext";
 
 type NavbarProps = {
   onShowCart: () => void;
-  cart: ProductProps[];
   onShowLogin: () => void;
   onShowProduct: (value?: boolean) => void;
 };
 
-const Navbar = ({
-  onShowCart,
-  cart,
-  onShowLogin,
-  onShowProduct,
-}: NavbarProps) => {
+const Navbar = ({ onShowCart, onShowLogin, onShowProduct }: NavbarProps) => {
   const [theme, setTheme] = useState<boolean>(true);
+
+  const context = useContext(CartContext);
 
   const handleTheme = () => {
     setTheme((prev) => !prev);
     document.body.classList.toggle("dark");
   };
 
-  const count = cart.reduce((acc, product) => acc + product.quantity, 0);
+  const count = context?.cart.reduce(
+    (acc, product) => acc + product.quantity,
+    0
+  );
 
   return (
     <div className="navbar">
