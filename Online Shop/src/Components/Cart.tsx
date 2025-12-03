@@ -11,10 +11,13 @@ export type CartProps = {
 const Cart = () => {
   const context = useContext<CartProps | null>(CartContext);
 
+  if (!context) return <div>No cart context available</div>;
+  const { cart, handleAddProduct, handleRemoveProduct } = context;
+
   return (
     <div className="cart-wrapper">
       <h1>Your cart</h1>
-      {context?.cart.map((product) => (
+      {cart.map((product) => (
         <div key={product.id} className="cart-product">
           <img
             src={product.thumbnail}
@@ -28,13 +31,13 @@ const Cart = () => {
               <ul className="cart-buttons">
                 <li>{product.quantity}</li>
                 <li>
-                  <button onClick={() => context.handleAddProduct(product.id)}>
+                  <button onClick={() => handleAddProduct(product.id)}>
                     +
                   </button>
                 </li>
                 <li>
                   <button
-                    onClick={() => context.handleRemoveProduct(product.id)}
+                    onClick={() => handleRemoveProduct(product.id)}
                     disabled={product.quantity === 0}
                   >
                     -
