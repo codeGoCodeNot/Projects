@@ -37,6 +37,7 @@ function App() {
             />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
+            <Route path="*" element={<h1>This page was not found.</h1>} />
           </Routes>
         </div>
       </CartProvider>

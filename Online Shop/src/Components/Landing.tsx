@@ -1,12 +1,17 @@
+import { Link } from "react-router-dom";
+
 const Landing = () => {
   return (
     <>
+      <title>Black Market</title>
       <h1>Online shopping simplified</h1>
       <p className="tagline text-dimmed">
         Order your groceries from Blackmarket with our easy to use app, and get
         your products delivered straight to your doorstep.
       </p>
-      <button className="btn">Start shopping</button>
+      <Link to="/products" className="btn">
+        Start shopping
+      </Link>
       <img
         className="landing-cover"
         width="816"

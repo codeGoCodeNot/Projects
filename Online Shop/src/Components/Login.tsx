@@ -50,6 +50,7 @@ const Login = () => {
   return (
     <div className="profile-wrapper">
       <h1>Login</h1>
+      <title>Login | Blackmarket</title>
       <p className="text-dimmed">Login to BlackMarket</p>
 
       <form onSubmit={handleSubmit(onSubmit)}>

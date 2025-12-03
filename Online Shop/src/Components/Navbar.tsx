@@ -19,7 +19,9 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <a className="logo">Blackmarket</a>
+      <Link className="logo" to="/">
+        Blackmarket
+      </Link>
       <nav className="nav-wrapper">
         <button onClick={handleTheme} className="theme-switcher">
           <img
