@@ -1,14 +1,8 @@
 import { useContext, useState } from "react";
-
 import { CartContext } from "../context/CartContext";
+import { Link } from "react-router-dom";
 
-type NavbarProps = {
-  onShowCart: () => void;
-  onShowLogin: () => void;
-  onShowProduct: (value?: boolean) => void;
-};
-
-const Navbar = ({ onShowCart, onShowLogin, onShowProduct }: NavbarProps) => {
+const Navbar = () => {
   const [theme, setTheme] = useState<boolean>(true);
 
   const context = useContext(CartContext);
@@ -41,22 +35,22 @@ const Navbar = ({ onShowCart, onShowLogin, onShowProduct }: NavbarProps) => {
         </button>
         <ul className="nav">
           <li className="nav-item">
-            <a onClick={() => onShowProduct(false)} className="cursor-pointer">
+            <Link className="cursor-pointer" to="/">
               Home
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a onClick={onShowLogin} className="cursor-pointer">
+            <Link className="cursor-pointer" to="/login">
               Login
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
             <a className="cursor-pointer">Products</a>
           </li>
         </ul>
-        <button onClick={onShowCart} className="btn btn-nav">
+        <Link className="btn btn-nav" to="/cart">
           Cart ({count})
-        </button>
+        </Link>
       </nav>
     </div>
   );

@@ -1,4 +1,4 @@
-const Landing = ({ onShowProduct }: { onShowProduct: () => void }) => {
+const Landing = () => {
   return (
     <>
       <h1>Online shopping simplified</h1>
@@ -6,9 +6,7 @@ const Landing = ({ onShowProduct }: { onShowProduct: () => void }) => {
         Order your groceries from Blackmarket with our easy to use app, and get
         your products delivered straight to your doorstep.
       </p>
-      <button onClick={onShowProduct} className="btn">
-        Start shopping
-      </button>
+      <button className="btn">Start shopping</button>
       <img
         className="landing-cover"
         width="816"
