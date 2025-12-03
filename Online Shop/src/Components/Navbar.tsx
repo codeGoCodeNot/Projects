@@ -45,7 +45,9 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <a className="cursor-pointer">Products</a>
+            <Link className="cursor-pointer" to="/products">
+              Products
+            </Link>
           </li>
         </ul>
         <Link className="btn btn-nav" to="/cart">

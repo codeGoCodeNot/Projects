@@ -1,4 +1,3 @@
-import Product from "./Components/Product";
 import Landing from "./Components/Landing";
 import Cart from "./Components/Cart";
 import Navbar from "./Components/Navbar";
@@ -8,9 +7,11 @@ import { get } from "./Fetcher/fetcher";
 import { type ProductProps } from "./Components/types";
 import { CartProvider } from "./context/CartContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProductsGrid from "./Components/Products/ProductsGrid";
+import ProductDetails from "./Components/Products/ProductDetails";
 
 function App() {
-  const { data: products } = useSuspenseQuery<ProductProps[]>({
+  const { data: products = [] } = useSuspenseQuery<ProductProps[]>({
     queryKey: ["products-list"],
     queryFn: () => get("products-list"),
   });
@@ -28,18 +29,11 @@ function App() {
             <Route path="/" element={<Landing />} />
             <Route
               path="/products"
-              element={
-                <>
-                  <div className="products-title">
-                    <h1>Products</h1>
-                  </div>
-                  <div className="products-grid">
-                    {products.map((product) => (
-                      <Product key={product.id} details={product} />
-                    ))}
-                  </div>
-                </>
-              }
+              element={<ProductsGrid products={products} />}
+            />
+            <Route
+              path="/products/:id"
+              element={<ProductDetails products={products} />}
             />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />

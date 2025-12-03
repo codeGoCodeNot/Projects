@@ -39,6 +39,10 @@ const Cart = () => {
                   <button
                     onClick={() => handleRemoveProduct(product.id)}
                     disabled={product.quantity === 0}
+                    style={{
+                      cursor:
+                        product.quantity === 0 ? "not-allowed" : "pointer",
+                    }}
                   >
                     -
                   </button>
