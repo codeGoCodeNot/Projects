@@ -1,8 +1,12 @@
 import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
-const Navbar = () => {
+type User = {
+  user: { username: string } | null;
+};
+
+const Navbar = ({ user }: User) => {
   const [theme, setTheme] = useState<boolean>(true);
 
   const context = useContext(CartContext);
@@ -37,20 +41,29 @@ const Navbar = () => {
         </button>
         <ul className="nav">
           <li className="nav-item">
-            <Link className="cursor-pointer" to="/">
+            <NavLink className="cursor-pointer" to="/">
               Home
-            </Link>
+            </NavLink>
           </li>
+          {!user && (
+            <li className="nav-item">
+              <NavLink className="cursor-pointer" to="/login">
+                Login
+              </NavLink>
+            </li>
+          )}
           <li className="nav-item">
-            <Link className="cursor-pointer" to="/login">
-              Login
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="cursor-pointer" to="/products">
+            <NavLink className="cursor-pointer" to="/products">
               Products
-            </Link>
+            </NavLink>
           </li>
+          {user && (
+            <li className="nav-item">
+              <NavLink className="cursor-pointer" to="/profile">
+                Profile
+              </NavLink>
+            </li>
+          )}
         </ul>
         <Link className="btn btn-nav" to="/cart">
           Cart ({count})

@@ -2,6 +2,7 @@ import Landing from "./Components/Landing";
 import Cart from "./Components/Cart";
 import Navbar from "./Components/Navbar";
 import Login from "./Components/Login";
+import Profile from "./Components/Profile";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { get } from "./Fetcher/fetcher";
 import { type ProductProps } from "./Components/types";
@@ -9,8 +10,16 @@ import { CartProvider } from "./context/CartContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProductsGrid from "./Components/Products/ProductsGrid";
 import ProductDetails from "./Components/Products/ProductDetails";
+import { useState } from "react";
+
+export type User = { username: string } | null;
 
 function App() {
+  const [user, setUser] = useState<User>(null);
+
+  const handleUserLogin = (newUser: { username: string }) => setUser(newUser);
+  const handleUserLogout = () => setUser(null);
+
   const { data: products = [] } = useSuspenseQuery<ProductProps[]>({
     queryKey: ["products-list"],
     queryFn: () => get("products-list"),
@@ -21,7 +30,7 @@ function App() {
       <CartProvider products={products}>
         <div className="wrapper-gray">
           <div className="container">
-            <Navbar />
+            <Navbar user={user} />
           </div>
         </div>
         <div className="container page-wrapper">
@@ -36,7 +45,14 @@ function App() {
               element={<ProductDetails products={products} />}
             />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/login"
+              element={<Login onUserLogin={handleUserLogin} />}
+            />
+            <Route
+              path="/profile"
+              element={<Profile user={user} onUserLogout={handleUserLogout} />}
+            />
             <Route path="*" element={<h1>This page was not found.</h1>} />
           </Routes>
         </div>

@@ -1,9 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import { useEffect, useId } from "react";
+import { useEffect, useId, useState } from "react";
 import { post } from "../Fetcher/fetcher";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   email: z
@@ -18,9 +19,15 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const Login = () => {
+type LoginProps = {
+  onUserLogin: (newUser: { username: string }) => void;
+};
+
+const Login = ({ onUserLogin }: LoginProps) => {
   const emailId = useId();
   const passwordId = useId();
+  const navigate = useNavigate();
+  const [loginError, setLoginError] = useState("");
 
   const {
     register,
@@ -39,9 +46,16 @@ const Login = () => {
       post("post", "rpc/login", data),
     onSuccess: (res) => {
       console.log("Login success", res);
-      reset();
+      if (res && res[0]) {
+        onUserLogin(res[0]);
+        navigate("/profile");
+        setLoginError("");
+        reset();
+      }
     },
-    onError: (err) => console.error("Login error", err),
+    onError: () => {
+      setLoginError("Login failed due to invalid credentials.");
+    },
   });
 
   const onSubmit = (data: FormData) =>
@@ -85,6 +99,8 @@ const Login = () => {
         {errors.password && (
           <p className="text-red-500 text-sm pb-1">{errors.password.message}</p>
         )}
+
+        <p className="login-error text-sm">{loginError}</p>
 
         <div className="form-buttons">
           <input
