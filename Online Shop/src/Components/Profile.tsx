@@ -1,7 +1,7 @@
 import { Navigate, useNavigate } from "react-router-dom";
 
 type ProfileProps = {
-  user: { username: string } | null;
+  user: { username: string; email: string } | null;
   onUserLogout: () => void;
 };
 

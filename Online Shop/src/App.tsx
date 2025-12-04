@@ -12,12 +12,13 @@ import ProductsGrid from "./Components/Products/ProductsGrid";
 import ProductDetails from "./Components/Products/ProductDetails";
 import { useState } from "react";
 
-export type User = { username: string } | null;
+export type User = { username: string; email: string } | null;
 
 function App() {
   const [user, setUser] = useState<User>(null);
 
-  const handleUserLogin = (newUser: { username: string }) => setUser(newUser);
+  const handleUserLogin = (newUser: { username: string; email: string }) =>
+    setUser(newUser);
   const handleUserLogout = () => setUser(null);
 
   const { data: products = [] } = useSuspenseQuery<ProductProps[]>({
@@ -40,11 +41,8 @@ function App() {
               path="/products"
               element={<ProductsGrid products={products} />}
             />
-            <Route
-              path="/products/:id"
-              element={<ProductDetails products={products} />}
-            />
-            <Route path="/cart" element={<Cart />} />
+            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={<Cart user={user} />} />
             <Route
               path="/login"
               element={<Login onUserLogin={handleUserLogin} />}

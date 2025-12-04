@@ -20,7 +20,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 type LoginProps = {
-  onUserLogin: (newUser: { username: string }) => void;
+  onUserLogin: (newUser: { username: string; email: string }) => void;
 };
 
 const Login = ({ onUserLogin }: LoginProps) => {

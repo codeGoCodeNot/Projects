@@ -10,15 +10,7 @@ const ProductsGrid = ({ products }: { products: ProductProps[] }) => {
       </div>
       <div className="products-grid">
         {products.map((product) => (
-          <Link
-            key={product.id}
-            to={`/products/${product.id}`}
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-              display: "block",
-            }}
-          >
+          <Link key={product.id} to={`/products/${product.id}`}>
             <Product key={product.id} details={product} />
           </Link>
         ))}

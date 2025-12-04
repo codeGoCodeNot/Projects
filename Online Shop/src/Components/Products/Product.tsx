@@ -1,10 +1,13 @@
 import type { ProductProps } from "../types";
+import Price from "../Price";
 
 interface Product {
   details: ProductProps;
 }
 
 const Product = ({ details }: Product) => {
+  console.log(details);
+
   return (
     <div className="product">
       <img
@@ -16,7 +19,12 @@ const Product = ({ details }: Product) => {
       />
       <p className="product-name">{details.name}</p>
       <div className="product-price">
-        ${(details.final_price / 100).toFixed(2)}
+        {
+          <Price
+            finalPrice={details.final_price}
+            originalPrice={details.original_price}
+          />
+        }
       </div>
     </div>
   );
