@@ -3,7 +3,7 @@ import { CartContext } from "../context/CartContext";
 import { Link, NavLink } from "react-router-dom";
 
 type User = {
-  user: { username: string } | null;
+  user: { email: string } | null;
 };
 
 const Navbar = ({ user }: User) => {
