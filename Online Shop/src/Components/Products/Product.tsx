@@ -6,8 +6,6 @@ interface Product {
 }
 
 const Product = ({ details }: Product) => {
-  console.log(details);
-
   return (
     <div className="product">
       <img
