@@ -2,6 +2,7 @@
 
 -- pnpm install --save-dev eslint-plugin-simple-import-sort
 -- pnpm i clsx
+-- pnpm add next-themes
 
 # pnpm init
 
