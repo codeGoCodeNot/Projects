@@ -28,7 +28,7 @@ const Header = () => {
         </div>
         <div className="flex items-center  gap-x-2">
           <ThemeSwitcher />
-          <Button asChild variant="outline">
+          <Button asChild variant="default">
             <Link href={ticketsPath()}>Tickets</Link>
           </Button>
         </div>
